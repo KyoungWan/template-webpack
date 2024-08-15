@@ -19,18 +19,18 @@ import catnipImg from "../assets/spritesheets/catnip.png";
 import clawWhiteImg from "../assets/spritesheets/claw-white.png";
 import clawYellowImg from "../assets/spritesheets/claw-yellow.png";
 
-import beamOgg from "../assets/sounds/beam.ogg";
-import scratchOgg from "../assets/sounds/scratch.ogg";
-import hitMobOgg from "../assets/sounds/hitMob.ogg";
-import growlOgg from "../assets/sounds/growl.ogg";
-import explosionOgg from "../assets/sounds/explosion.ogg";
-import hurtOgg from "../assets/sounds/hurt.ogg";
-import expUpOgg from "../assets/sounds/expUp.ogg";
-import nextLevelOgg from "../assets/sounds/nextLevel.ogg";
-import gameOverOgg from "../assets/sounds/gameover.ogg";
-import gameClearOgg from "../assets/sounds/gameClear.ogg";
-import pauseInOgg from "../assets/sounds/pauseIn.ogg";
-import pauseOutOgg from "../assets/sounds/pauseOut.ogg";
+// import beamOgg from "../assets/sounds/beam.ogg";
+// import scratchOgg from "../assets/sounds/scratch.ogg";
+// import hitMobOgg from "../assets/sounds/hitMob.ogg";
+// import growlOgg from "../assets/sounds/growl.ogg";
+// import explosionOgg from "../assets/sounds/explosion.ogg";
+// import hurtOgg from "../assets/sounds/hurt.ogg";
+// import expUpOgg from "../assets/sounds/expUp.ogg";
+// import nextLevelOgg from "../assets/sounds/nextLevel.ogg";
+// import gameOverOgg from "../assets/sounds/gameover.ogg";
+// import gameClearOgg from "../assets/sounds/gameClear.ogg";
+// import pauseInOgg from "../assets/sounds/pauseIn.ogg";
+// import pauseOutOgg from "../assets/sounds/pauseOut.ogg";
 
 // 사용할 모든 asset(image, sprite image, audio, font 등)을 load해 놓습니다.
 export default class LoadingScene extends Phaser.Scene {
@@ -92,19 +92,19 @@ export default class LoadingScene extends Phaser.Scene {
       frameHeight: 16,
     });
 
-    // AUDIOS
-    this.load.audio("audio_beam", beamOgg);
-    this.load.audio("audio_scratch", scratchOgg);
-    this.load.audio("audio_hitMob", hitMobOgg);
-    this.load.audio("audio_growl", growlOgg);
-    this.load.audio("audio_explosion", explosionOgg);
-    this.load.audio("audio_expUp", expUpOgg);
-    this.load.audio("audio_hurt", hurtOgg);
-    this.load.audio("audio_nextLevel", nextLevelOgg);
-    this.load.audio("audio_gameOver", gameOverOgg);
-    this.load.audio("audio_gameClear", gameClearOgg);
-    this.load.audio("audio_pauseIn", pauseInOgg);
-    this.load.audio("audio_pauseOut", pauseOutOgg);
+    // // AUDIOS
+    // this.load.audio("audio_beam", beamOgg);
+    // this.load.audio("audio_scratch", scratchOgg);
+    // this.load.audio("audio_hitMob", hitMobOgg);
+    // this.load.audio("audio_growl", growlOgg);
+    // this.load.audio("audio_explosion", explosionOgg);
+    // this.load.audio("audio_expUp", expUpOgg);
+    // this.load.audio("audio_hurt", hurtOgg);
+    // this.load.audio("audio_nextLevel", nextLevelOgg);
+    // this.load.audio("audio_gameOver", gameOverOgg);
+    // this.load.audio("audio_gameClear", gameClearOgg);
+    // this.load.audio("audio_pauseIn", pauseInOgg);
+    // this.load.audio("audio_pauseOut", pauseOutOgg);
 
     // FONT
     this.load.bitmapFont("pixelFont", fontPng, fontXml);
