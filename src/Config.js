@@ -6,8 +6,8 @@ import PlayingScene from "./scenes/PlayingScene";
 
 const Config = {
   // 게임 화면의 크기와 색을 설정하는 부분입니다.
-  width: 800,
-  height: 600,
+  width: 1200,
+  height: 800,
   backgroundColor: 0x000000,
 
   // 사용할 scene은 config의 scene 프로퍼티의 배열에 추가해줘야 합니다.
