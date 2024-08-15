@@ -68,10 +68,8 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
   }
   // mob이 dynamic attack에 맞을 경우 실행되는 함수입니다.
   hitByDynamic(weaponDynamic, damage) {
-    console.log("!!!!!!!!!!!!!!!!hit!!!!!!!!!!!!!!!!!!");
-
     // 공격에 맞은 소리를 재생합니다.
-    // this.scene.m_hitMobSound.play();
+    this.scene.m_hitMobSound.play();
     // 몹의 hp에서 damage만큼 감소시킵니다.
     this.m_hp -= damage;
     // 공격받은 몹의 투명도를 1초간 조절함으로써 공격받은 것을 표시합니다.
@@ -87,7 +85,7 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
     if (!this.m_canBeAttacked) return;
 
     // 공격에 맞은 소리를 재생합니다.
-    // this.scene.m_hitMobSound.play();
+    this.scene.m_hitMobSound.play();
     // 몹의 hp에서 damage만큼 감소시킵니다.
     this.m_hp -= damage;
     // 공격받은 몹의 투명도를 1초간 조절함으로써 공격받은 것을 표시합니다.

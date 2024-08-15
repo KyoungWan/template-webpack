@@ -12,7 +12,7 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     scene.physics.world.enableBody(this);
 
     scene.m_weaponDynamic.add(this);
-    // scene.m_beamSound.play()
+    scene.m_beamSound.play();
 
     this.m_damage = damage;
     this.scale = scale;
