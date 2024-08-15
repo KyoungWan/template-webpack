@@ -3,6 +3,8 @@ import Player from "../characters/Player";
 import { setBackground } from "../utils/backgroundManager";
 import Config from "../Config";
 import { addMobEvent } from "../utils/mobManager";
+import Mob from "../characters/Mob";
+import { addAttackEvent } from "../utils/attackManager";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -41,15 +43,24 @@ export default class PlayingScene extends Phaser.Scene {
 
     // 같은 물리법칙 적용
     this.m_mobs = this.physics.add.group();
+    this.m_mobs.add(new Mob(this, 100, 100, "mob1", "mob1_anim", 10, 0.9));
+
     this.m_mobEvents = [];
+    this.m_closest = [];
+
+    // attack
+    this.m_weaponDynamic = this.add.group();
+    this.m_weaponStatic = this.add.group();
+    this.m_attackEvents = {};
+    addAttackEvent(this, "beam", 10, 1, 1000);
 
     // 몹생성 이벤트는 1번 부르지만, 내부에서 loop true로 계속 호출하여 여러 몹을 생성한다.
     // scene, repeatGap, mobTexture, mobAnimKey, mobHp, dropRate
     addMobEvent(this, 300, "mob1", "mob1_anim", 10, 0.9);
-    addMobEvent(this, 300, "mob2", "mob2_anim", 10, 0.9);
-    addMobEvent(this, 300, "mob3", "mob3_anim", 10, 0.9);
-    addMobEvent(this, 300, "mob4", "mob4_anim", 10, 0.9);
-    addMobEvent(this, 300, "lion", "lion_anim", 10, 0.9);
+    // addMobEvent(this, 300, "mob2", "mob2_anim", 10, 0.9);
+    // addMobEvent(this, 300, "mob3", "mob3_anim", 10, 0.9);
+    // addMobEvent(this, 300, "mob4", "mob4_anim", 10, 0.9);
+    // addMobEvent(this, 300, "lion", "lion_anim", 10, 0.9);
   }
   update() {
     this.movePlayerManager();
@@ -61,6 +72,12 @@ export default class PlayingScene extends Phaser.Scene {
     // 타일포지션을 플레이어가 움직이는 만큼 이동해준다.
     this.m_background.tilePositionX = this.m_player.x - Config.width / 2;
     this.m_background.tilePositionY = this.m_player.y - Config.height / 2;
+
+    const cloest = this.physics.closest(
+      this.m_player,
+      this.m_mobs.getChildren()
+    );
+    this.m_closest = cloest;
   }
 
   movePlayerManager() {
