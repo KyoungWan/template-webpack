@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Player from "../characters/Player";
 import { setBackground } from "../utils/backgroundManager";
 import Config from "../Config";
+import { addMobEvent } from "../utils/mobManager";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -37,6 +38,18 @@ export default class PlayingScene extends Phaser.Scene {
     setBackground(this, "background1");
 
     this.m_cursorKeys = this.input.keyboard.createCursorKeys();
+
+    // 같은 물리법칙 적용
+    this.m_mobs = this.physics.add.group();
+    this.m_mobEvents = [];
+
+    // 몹생성 이벤트는 1번 부르지만, 내부에서 loop true로 계속 호출하여 여러 몹을 생성한다.
+    // scene, repeatGap, mobTexture, mobAnimKey, mobHp, dropRate
+    addMobEvent(this, 300, "mob1", "mob1_anim", 10, 0.9);
+    addMobEvent(this, 300, "mob2", "mob2_anim", 10, 0.9);
+    addMobEvent(this, 300, "mob3", "mob3_anim", 10, 0.9);
+    addMobEvent(this, 300, "mob4", "mob4_anim", 10, 0.9);
+    addMobEvent(this, 300, "lion", "lion_anim", 10, 0.9);
   }
   update() {
     this.movePlayerManager();
