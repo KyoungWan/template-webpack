@@ -12,7 +12,7 @@ process.stdout.write(`${line}\n${msg}\n${line}\n`);
 
 module.exports = {
   mode: "production",
-  entry: "./src/main.js",
+  entry: "./src/index.js",
   output: {
     path: path.resolve(process.cwd(), "dist"),
     filename: "./bundle.min.js",
@@ -36,7 +36,7 @@ module.exports = {
         use: "raw-loader",
       },
       {
-        test: /\.(gif|png|jpe?g|svg|xml|glsl)$/i,
+        test: /\.(gif|png|jpe?g|svg|xml|glsl|mp3|ogg)$/i,
         use: "file-loader",
       },
     ],
