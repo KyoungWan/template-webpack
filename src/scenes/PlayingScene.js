@@ -2,12 +2,18 @@ import Phaser from "phaser";
 import Player from "../characters/Player";
 import { setBackground } from "../utils/backgroundManager";
 import Config from "../Config";
-import { addMobEvent, removeOldestMobEvent } from "../utils/mobManager";
+import { addMob, addMobEvent, removeOldestMobEvent } from "../utils/mobManager";
 import Mob from "../characters/Mob";
-import { addAttackEvent } from "../utils/attackManager";
+import {
+  addAttackEvent,
+  removeAttack,
+  setAttackDamage,
+  setAttackScale,
+} from "../utils/attackManager";
 import TopBar from "../ui/TopBar";
 import ExpBar from "../ui/ExpBar";
 import { pause } from "../utils/pauseManager";
+import { createTime } from "../utils/time";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -47,15 +53,20 @@ export default class PlayingScene extends Phaser.Scene {
     // 같은 물리법칙 적용
     this.m_mobs = this.physics.add.group();
     this.m_mobs.add(new Mob(this, 100, 100, "mob1", "mob1_anim", 10, 0.9));
-
     this.m_mobEvents = [];
+
+    // 몹생성 이벤트는 1번 부르지만, 내부에서 loop true로 계속 호출하여 여러 몹을 생성한다.
+    // scene, repeatGap, mobTexture, mobAnimKey, mobHp, dropRate
+    addMobEvent(this, 200, "mob1", "mob1_anim", 10, 0.9);
+    addMob(this, "lion", "lion_anim", 200);
+
     this.m_closest = [];
 
     // attack
     this.m_weaponDynamic = this.add.group();
     this.m_weaponStatic = this.add.group();
     this.m_attackEvents = {};
-    addAttackEvent(this, "beam", 10, 1, 1000);
+    addAttackEvent(this, "claw", 10, 2.3, 1500);
 
     // Player와 mob이 부딪혔을 경우 player에 데미지 10을 줍니다.
     // (Player.js에서 hitByMob 함수 확인)
@@ -101,14 +112,6 @@ export default class PlayingScene extends Phaser.Scene {
       this
     );
 
-    // 몹생성 이벤트는 1번 부르지만, 내부에서 loop true로 계속 호출하여 여러 몹을 생성한다.
-    // scene, repeatGap, mobTexture, mobAnimKey, mobHp, dropRate
-    addMobEvent(this, 300, "mob1", "mob1_anim", 10, 0.9);
-    // addMobEvent(this, 300, "mob2", "mob2_anim", 10, 0.9);
-    // addMobEvent(this, 300, "mob3", "mob3_anim", 10, 0.9);
-    // addMobEvent(this, 300, "mob4", "mob4_anim", 10, 0.9);
-    // addMobEvent(this, 300, "lion", "lion_anim", 10, 0.9);
-
     this.m_topBar = new TopBar(this);
     this.m_expBar = new ExpBar(this, 50);
 
@@ -119,6 +122,9 @@ export default class PlayingScene extends Phaser.Scene {
       },
       this
     );
+
+    // time
+    createTime(this);
   }
   update() {
     this.movePlayerManager();
@@ -170,6 +176,10 @@ export default class PlayingScene extends Phaser.Scene {
       vector[1] -= 1;
     }
     this.m_player.move(vector);
+
+    this.m_weaponStatic.children.each((weapon) => {
+      weapon.move(vector);
+    }, this);
   }
 
   pickExpUp(player, expUp) {
@@ -191,14 +201,36 @@ export default class PlayingScene extends Phaser.Scene {
       case 2:
         removeOldestMobEvent(this);
         addMobEvent(this, 1000, "mob2", "mob2_anim", 20, 0.8);
+        // claw 공격 크기 확대
+        setAttackScale(this, "claw", 4);
         break;
       case 3:
         removeOldestMobEvent(this);
         addMobEvent(this, 1000, "mob3", "mob3_anim", 30, 0.7);
+        // catnip 공격 추가
+        addAttackEvent(this, "catnip", 10, 2);
         break;
       case 4:
         removeOldestMobEvent(this);
         addMobEvent(this, 1000, "mob4", "mob4_anim", 40, 0.7);
+        // catnip 공격 크기 확대
+        setAttackScale(this, "catnip", 3);
+        setBackground(this, "background3");
+        break;
+      case 5:
+        // claw 공격 삭제
+        removeAttack(this, "claw");
+        // beam 공격 추가
+        addAttackEvent(this, "beam", 10, 1, 1000);
+        break;
+      case 6:
+        // beam 공격 크기 및 데미지 확대
+        setAttackScale(this, "beam", 2);
+        setAttackDamage(this, "beam", 40);
+        break;
+      case 7:
+        addMob(this, "lion", "lion_anim", 200, 0);
+        setBackground(this, "background3");
         break;
     }
   }

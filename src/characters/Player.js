@@ -1,8 +1,9 @@
 import Phaser from "phaser";
 import Config from "../Config";
 import HpBar from "../ui/HpBar";
-import { loseGame } from "../utils/screenManager";
+import { loseGame } from "../utils/sceneManager";
 
+let PLAYER_SPEED = 10;
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene) {
     // 화면의 가운데에 player를 추가해줍니다.
@@ -11,6 +12,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     super(scene, Config.width / 2, Config.height / 2, "player");
     scene.add.existing(this);
     scene.physics.add.existing(this);
+
+    this.playerSpeed = PLAYER_SPEED;
 
     // scale 프로퍼티를 조절해 크기를 조절할 수 있습니다. (디폴트: 1)
     this.scale = 2;
@@ -29,7 +32,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.m_hpBar = new HpBar(scene, this, 100);
   }
   move(vector) {
-    let PLAYER_SPEED = 10;
     this.x += vector[0] * PLAYER_SPEED;
     this.y -= vector[1] * PLAYER_SPEED;
 
