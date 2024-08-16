@@ -5,6 +5,8 @@ import Config from "../Config";
 import { addMobEvent } from "../utils/mobManager";
 import Mob from "../characters/Mob";
 import { addAttackEvent } from "../utils/attackManager";
+import TopBar from "../ui/TopBar";
+import ExpBar from "../ui/ExpBar";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -105,6 +107,9 @@ export default class PlayingScene extends Phaser.Scene {
     // addMobEvent(this, 300, "mob3", "mob3_anim", 10, 0.9);
     // addMobEvent(this, 300, "mob4", "mob4_anim", 10, 0.9);
     // addMobEvent(this, 300, "lion", "lion_anim", 10, 0.9);
+
+    this.m_topBar = new TopBar(this);
+    this.m_expBar = new ExpBar(this, 50);
   }
   update() {
     this.movePlayerManager();
@@ -162,6 +167,11 @@ export default class PlayingScene extends Phaser.Scene {
     expUp.disableBody(true, true); // 꼭 필요한가?
     expUp.destroy();
     this.m_expUpSound.play;
-    console.log("expUp", expUp.m_exp);
+
+    this.m_expBar.increase(expUp.m_exp);
+
+    if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
+      this.m_topBar.gainLevel();
+    }
   }
 }

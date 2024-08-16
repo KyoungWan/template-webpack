@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 const ITEM_PROPERTY = {
   mob1: {
-    exp: 10,
+    exp: 22,
     color: "red",
   },
   mob2: {
