@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Player from "../characters/Player";
 import { setBackground } from "../utils/backgroundManager";
 import Config from "../Config";
-import { addMobEvent } from "../utils/mobManager";
+import { addMobEvent, removeOldestMobEvent } from "../utils/mobManager";
 import Mob from "../characters/Mob";
 import { addAttackEvent } from "../utils/attackManager";
 import TopBar from "../ui/TopBar";
@@ -186,5 +186,20 @@ export default class PlayingScene extends Phaser.Scene {
 
   afterLevelUp() {
     this.m_topBar.gainLevel();
+
+    switch (this.m_topBar.m_level) {
+      case 2:
+        removeOldestMobEvent(this);
+        addMobEvent(this, 1000, "mob2", "mob2_anim", 20, 0.8);
+        break;
+      case 3:
+        removeOldestMobEvent(this);
+        addMobEvent(this, 1000, "mob3", "mob3_anim", 30, 0.7);
+        break;
+      case 4:
+        removeOldestMobEvent(this);
+        addMobEvent(this, 1000, "mob4", "mob4_anim", 40, 0.7);
+        break;
+    }
   }
 }
