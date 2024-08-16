@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Explosion from "./Explosion";
+import ExpUp from "../items/ExpUp";
 
 export default class Mob extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, animKey, initHp, dropRate) {
@@ -134,6 +135,11 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
     this.scene.m_explosionSound.play();
 
     this.scene.time.removeEvent(this.m_events);
+    if (Math.random() < this.m_dropRate) {
+      const expUp = new ExpUp(this.scene, this);
+      this.scene.m_expUps.add(expUp);
+    }
+
     this.destroy();
   }
 }

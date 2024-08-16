@@ -88,6 +88,16 @@ export default class PlayingScene extends Phaser.Scene {
       this
     );
 
+    // item
+    this.m_expUps = this.physics.add.group();
+    this.physics.add.overlap(
+      this.m_player,
+      this.m_expUps,
+      this.pickExpUp,
+      null,
+      this
+    );
+
     // 몹생성 이벤트는 1번 부르지만, 내부에서 loop true로 계속 호출하여 여러 몹을 생성한다.
     // scene, repeatGap, mobTexture, mobAnimKey, mobHp, dropRate
     addMobEvent(this, 300, "mob1", "mob1_anim", 10, 0.9);
@@ -146,5 +156,12 @@ export default class PlayingScene extends Phaser.Scene {
       vector[1] -= 1;
     }
     this.m_player.move(vector);
+  }
+
+  pickExpUp(player, expUp) {
+    expUp.disableBody(true, true); // 꼭 필요한가?
+    expUp.destroy();
+    this.m_expUpSound.play;
+    console.log("expUp", expUp.m_exp);
   }
 }
