@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import Explosion from "./Explosion";
 
 export default class Mob extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, animKey, initHp, dropRate) {
@@ -65,6 +66,10 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
     } else {
       this.flipX = false;
     }
+
+    if (this.m_hp <= 0) {
+      this.die();
+    }
   }
   // mob이 dynamic attack에 맞을 경우 실행되는 함수입니다.
   hitByDynamic(weaponDynamic, damage) {
@@ -122,5 +127,13 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
       },
       loop: false,
     });
+  }
+
+  die() {
+    new Explosion(this.scene, this.x, this.y);
+    this.scene.m_explosionSound.play();
+
+    this.scene.time.removeEvent(this.m_events);
+    this.destroy();
   }
 }
