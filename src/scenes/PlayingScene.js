@@ -7,6 +7,7 @@ import Mob from "../characters/Mob";
 import { addAttackEvent } from "../utils/attackManager";
 import TopBar from "../ui/TopBar";
 import ExpBar from "../ui/ExpBar";
+import { pause } from "../utils/pauseManager";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -110,6 +111,14 @@ export default class PlayingScene extends Phaser.Scene {
 
     this.m_topBar = new TopBar(this);
     this.m_expBar = new ExpBar(this, 50);
+
+    this.input.keyboard.on(
+      "keydown-ESC",
+      () => {
+        pause(this, "pause");
+      },
+      this
+    );
   }
   update() {
     this.movePlayerManager();
@@ -171,7 +180,11 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_expBar.increase(expUp.m_exp);
 
     if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
-      this.m_topBar.gainLevel();
+      pause(this, "levelup");
     }
+  }
+
+  afterLevelUp() {
+    this.m_topBar.gainLevel();
   }
 }
